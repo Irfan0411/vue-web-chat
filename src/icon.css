@@ -1,0 +1,49 @@
+/* font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.i-add{
+    min-width: 20px;
+    height: 20px;
+    background-image: url('/add.svg');
+    background-size: contain;
+}
+.i-telephone{
+    min-width: 15px;
+    height: 15px;
+    background-image: url('/telephone.svg');
+    background-size: contain;
+}
+.i-videocall{
+    min-width: 15px;
+    height: 15px;
+    background-image: url('/videocall.svg');
+    background-size: contain;
+}
+.i-bullets{
+    min-width: 15px;
+    height: 15px;
+    background-image: url('/bullets.svg');
+    background-size: contain;
+}
+.i-paperclip{
+    min-width: 20px;
+    height: 20px;
+    background-image: url('/paperclip.svg');
+    background-size: contain;
+}
+.i-emote{
+    min-width: 20px;
+    height: 20px;
+    background-image: url('/emote.svg');
+    background-size: contain;
+}
+.i-send{
+    min-width: 15px;
+    height: 15px;
+    background-image: url('/send.svg');
+    background-size: contain;
+}
