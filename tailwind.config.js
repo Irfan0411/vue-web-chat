@@ -4,7 +4,8 @@ export default {
     "./index.html",
     "./src/App.vue",
     "./src/pages/**/*.vue",
-    "./src/components/**/*.vue"
+    "./src/components/**/*.vue",
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {
@@ -20,7 +21,7 @@ export default {
     },
   },
   plugins: [
-    require("tailwind-scrollbar")
+    require("flowbite/plugin")
   ],
 }
 
