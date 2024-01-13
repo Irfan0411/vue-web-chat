@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createStore } from "vuex";
+import router from "../router"
 
 const url = "http://localhost:3000/"
 
@@ -42,12 +43,35 @@ const store = createStore({
         }
     },
     actions: {
+        login(context, payload) {
+            axios.post(url + "login", payload)
+            .then(res => {
+                localStorage.setItem("token", res.data.token)
+                context.dispatch("userData")
+                router.push("/")
+            })
+            .catch(err => {
+                alert("Forbidden")
+                console.log(err);
+            })
+        },
+        register(context, payload) {
+            axios.post(url + "register", payload)
+            .then(res => {
+                context.dispatch("login", {email: payload.email, password: payload.password})
+            })
+            .catch(err => console.log(err))
+        },
         userData(context) {
             axios.get(url + "info")
             .then(res => {
                 context.commit("userData", res.data)
+                console.log(res.data);
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err);
+                router.push("/login")
+            })
         },
         loadChatList({commit, dispatch}) {
             axios.get(url + "chatlist")

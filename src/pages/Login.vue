@@ -49,18 +49,10 @@ export default {
     },
     methods: {
         login() {
-            axios.post("http://localhost:3000/login", {email: this.email, password: this.password})
-            .then(res => {
-                console.log(res.data);
-                localStorage.setItem("token", res.data.token)
-                this.$router.push("/")
-            })
-            .catch(err => {
-                console.log(err);
-            })
+            this.$store.dispatch("login", {email: this.email, password: this.password})
         },
         toRegister() {
-            this.$router.pusH("/register")
+            this.$router.push("/register")
         }
     }
 }

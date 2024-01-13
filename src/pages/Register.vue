@@ -57,13 +57,7 @@ export default {
     methods: {
         register() {
             if (this.password === this.confirmPassword) {
-                axios.post("http://localhost:3000/register", {email: this.email, username: this.username, password: this.password})
-                .then(res => {
-                    this.$router.push("/login")
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+                this.$store.dispatch("register", {email: this.email, username: this.username, password: this.password})
             } else {
                 alert("password and confirm password not match!!")
             }

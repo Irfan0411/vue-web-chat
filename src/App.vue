@@ -5,14 +5,10 @@
 </template>
 
 <script>
-import axios from 'axios';
-// import { socket } from './socket';
-
 export default {
   name: "app",
-  // mounted() {
-  //   axios.get("http://localhost:3000/info")
-  //   .then(res => socket.emit("userId", res.data.userId))
-  // }
+  mounted() {
+    this.$store.dispatch("userData")
+  }
 }
 </script>
