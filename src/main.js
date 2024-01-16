@@ -6,6 +6,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vue3lottie from 'vue3-lottie'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 createApp(App)
 .use(router)

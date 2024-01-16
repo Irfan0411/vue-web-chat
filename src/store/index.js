@@ -14,10 +14,14 @@ const store = createStore({
             },
             chatList: [],
             messages: {},
-            openChat: ""
+            openChat: "f592af20bce78b2d79cgj951c",
+            findSomeone: false
         }
     },
     getters: {
+        userId(state) {
+            return state.userData.userId
+        },
         userData(state) {
             return state.userData
         },
@@ -26,6 +30,9 @@ const store = createStore({
         },
         message(state) {
             return state.messages[state.openChat]
+        },
+        findSomeone(state) {
+            return state.findSomeone
         }
     },
     mutations: {
@@ -40,6 +47,9 @@ const store = createStore({
         },
         addChat(state, {messagesId, chat}) {
             state.messages[messagesId]?.push(chat)
+        },
+        findSomeone(state) {
+            state.findSomeone ? state.findSomeone = false : state.findSomeone = true
         }
     },
     actions: {
@@ -62,10 +72,11 @@ const store = createStore({
             })
             .catch(err => console.log(err))
         },
-        userData(context) {
+        userData({commit, dispatch}) {
             axios.get(url + "info")
             .then(res => {
-                context.commit("userData", res.data)
+                commit("userData", res.data)
+                dispatch("loadChatList")
                 console.log(res.data);
             })
             .catch(err => {
@@ -78,6 +89,10 @@ const store = createStore({
             .then(res => {
                 commit("loadChatList", res.data)
                 dispatch("loadMessage")
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
             })
         },
         loadMessage({state, commit}) {
@@ -86,6 +101,7 @@ const store = createStore({
                 axios.get(url + "chat/" + messagesId)
                 .then(res => {
                     commit("loadMessage", {messagesId, value: res.data})
+                    console.log(res.data);
                 })
                 .catch(err => console.log(err))
             }
@@ -94,6 +110,21 @@ const store = createStore({
             axios.post(url + "chatlist", payload)
             .then(res => {
                 context.dispatch("loadChatList")
+            })
+            .catch(err => console.log(err))
+        },
+        sendMessage({state, commit, dispatch}, {message, to}) {
+            const data = {
+                userId: state.userData.userId,
+                message: {
+                    text: message
+                },
+                to
+            }
+            console.log(data);
+            axios.post(url + "chat", data)
+            .then(res => {
+                console.log(res.data);
             })
             .catch(err => console.log(err))
         }
