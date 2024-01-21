@@ -14,7 +14,11 @@ const store = createStore({
             },
             chatList: [],
             messages: {},
-            openChat: "f592af20bce78b2d79cgj951c",
+            openChat: {
+                messagesId: "",
+                username: "",
+                userId: ""
+            },
             findSomeone: false
         }
     },
@@ -29,10 +33,13 @@ const store = createStore({
             return state.chatList
         },
         message(state) {
-            return state.messages[state.openChat]?.map((v, i) => ({...v, id: i}))
+            return state.messages[state.openChat.messagesId]?.map((v, i) => ({...v, id: i}))
         },
         findSomeone(state) {
             return state.findSomeone
+        },
+        openChat(state) {
+            return state.openChat
         }
     },
     mutations: {
@@ -50,6 +57,9 @@ const store = createStore({
         },
         findSomeone(state) {
             state.findSomeone ? state.findSomeone = false : state.findSomeone = true
+        },
+        openChat(state, payload) {
+            state.openChat = payload
         }
     },
     actions: {
@@ -88,6 +98,12 @@ const store = createStore({
             axios.get(url + "chatlist")
             .then(res => {
                 commit("loadChatList", res.data)
+                const payload = {
+                    messagesId: res.data[0].messagesId,
+                    userId: res.data[0].conversation.userId,
+                    username: res.data[0].conversation.username
+                }
+                commit("openChat", payload)
                 dispatch("loadMessage")
                 console.log(res.data);
             })

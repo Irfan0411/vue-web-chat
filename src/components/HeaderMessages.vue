@@ -2,7 +2,7 @@
   <div class="h-[10%] px-4 box-border flex justify-between items-center bg-blue-200 rounded-md">
     <div class="flex gap-2 items-center">
       <div class="bg-blue-600 w-12 h-12 rounded-full"></div>
-      <p class="font-extrabold text-xl text-black-text">Agus</p>
+      <p class="font-extrabold text-xl text-black-text">{{ openChat.username }}</p>
     </div>
     <div class="flex gap-2">
       <div class="bg-blue-300 w-9 h-9 rounded-full flex justify-center items-center">
@@ -17,3 +17,14 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "header-messages",
+  computed: {
+    openChat() {
+      return this.$store.getters.openChat
+    }
+  }
+}
+</script>

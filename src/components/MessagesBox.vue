@@ -38,7 +38,7 @@ export default {
     },
     methods: {
         scrollToBottom() {
-            this.$refs.last.scrollIntoView({behavior: 'smooth'})
+            setTimeout(()=> this.$refs.last.scrollIntoView(), 100)
         }
     },
     watch: {
@@ -47,7 +47,7 @@ export default {
         }
     },
     mounted() {
-        setTimeout(()=> this.$refs.last.scrollIntoView(), 500)
+        this.scrollToBottom()
     }
 }
 </script>

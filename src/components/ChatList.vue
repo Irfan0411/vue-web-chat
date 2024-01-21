@@ -2,7 +2,7 @@
     <div class="p-4">
         <input type="text" placeholder="Search" class="rounded-2xl w-full h-10 bg-light-bg px-4 my-2">
         <ul>
-            <li v-for="chat in chatList" class="my-2 flex justify-between">
+            <li v-for="(chat, i) in chatList" @click="select(i)" class="my-2 flex justify-between">
                 <div class="w-10/12 flex gap-2 items-center">
                     <div class="bg-blue-500 w-14 h-14 rounded-full"></div>
                     <div>
@@ -33,6 +33,20 @@ export default {
         }
     },
     props: { all: Boolean },
+    methods: {
+        select(i) {
+            if(this.all) {
+                // chat baru
+            } else {
+                const payload = {
+                    messagesId: this.chatList[i].messagesId,
+                    username: this.chatList[i].conversation.username,
+                    userId: this.chatList[i].conversation.userId
+                }
+                this.$store.commit("openChat", payload)
+            }
+        }
+    },
     mounted() {
         if (this.all) {
             axios.get("http://localhost:3000/user")
