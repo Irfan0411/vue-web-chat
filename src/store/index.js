@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createStore } from "vuex";
 import router from "../router"
+import { socket } from "../socket";
 
 const url = "http://localhost:3000/"
 
@@ -55,8 +56,8 @@ const store = createStore({
         loadMessage(state, {messagesId, value}) {
             state.messages[messagesId] = value
         },
-        addChat(state, payload) {
-            state.messages[state.openChat.messagesId]?.push(payload)
+        addChat(state, {messagesId, chat}) {
+            state.messages[messagesId]?.push(chat)
         },
         findSomeone(state) {
             state.findSomeone ? state.findSomeone = false : state.findSomeone = true
@@ -91,6 +92,7 @@ const store = createStore({
                 commit("userData", res.data)
                 dispatch("loadChatList")
                 console.log(res.data);
+                socket.emit("userId", res.data.userId)
             })
             .catch(err => {
                 console.log(err);
@@ -143,7 +145,7 @@ const store = createStore({
             axios.post(url + "chat", data)
             .then(res => {
                 console.log(res.data);
-                commit("addChat", res.data)
+                commit("addChat", {messagesId: state.openChat.messagesId, chat: res.data})
             })
             .catch(err => console.log(err))
         }

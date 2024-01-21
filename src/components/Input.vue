@@ -23,6 +23,7 @@ export default {
     methods: {
         send() {
             if(this.text) this.$store.dispatch("sendMessage", this.text)
+            this.text = ""
         },
         toggle() {
             this.focus ? this.focus = false : this.focus = true
