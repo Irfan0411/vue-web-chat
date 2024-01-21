@@ -1,5 +1,5 @@
 <template>
-    <div class="h-[80%] my-2 overflow-scroll">
+    <div class="h-[80%] my-2 overflow-y-scroll">
         <DynamicScroller
             ref="scroller"
             :items="messages"

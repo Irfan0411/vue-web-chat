@@ -32,6 +32,9 @@ const store = createStore({
         chatList(state) {
             return state.chatList
         },
+        lastChat(state) {
+            return state.chatList?.map(chat => (state.messages[chat.messagesId]?.slice(-1)[0].message.text))
+        },
         message(state) {
             return state.messages[state.openChat.messagesId]?.map((v, i) => ({...v, id: i}))
         },

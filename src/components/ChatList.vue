@@ -7,7 +7,7 @@
                     <div class="bg-blue-500 w-14 h-14 rounded-full"></div>
                     <div>
                         <p class="font-bold text-black-text text-lg">{{ chat.conversation.username }}</p>
-                        <p class="text-brown-text">Testing...</p>
+                        <p class="text-brown-text">{{ lastChat[i] }}</p>
                     </div>
                 </div>
                 <p class="mt-2 text-sm text-brown-text">10.20</p>
@@ -30,6 +30,9 @@ export default {
     computed: {
         chatList() {
             return this.all ? this.list : this.$store.getters.chatList
+        },
+        lastChat() {
+            return this.$store.getters.lastChat
         }
     },
     props: { all: Boolean },
