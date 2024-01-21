@@ -1,7 +1,7 @@
 <template>
     <div class="bg-white w-full h-16 rounded-full flex gap-2 items-center px-4">
         <div class="i-paperclip cursor-pointer"></div>
-        <input v-model="text" type="text" class="h-full w-full border-none focus:ring-0 text-black-text" placeholder="Type a message">
+        <input @focusin="toggle" @focusout="toggle" v-model="text" type="text" class="h-full w-full border-none focus:ring-0 text-black-text" placeholder="Type a message">
         <div class="w-9 h-9 cursor-pointer rounded-full flex justify-center items-center">
             <div class="i-emote"></div>
         </div>
@@ -16,13 +16,24 @@ export default {
     name: "input-chat",
     data() {
         return {
-            text: ""
+            text: "",
+            focus: false
         }
     },
     methods: {
         send() {
-            this.$store.dispatch("sendMessage", {message: this.text, to: "8b2d79cgj951c"})
+            if(this.text) this.$store.dispatch("sendMessage", this.text)
+        },
+        toggle() {
+            this.focus ? this.focus = false : this.focus = true
         }
+    },
+    mounted() {
+        window.addEventListener("keydown", (e)=> {
+            if(e.key === "Enter" && this.focus) {
+                this.send()
+            }
+        })
     }
 }
 </script>

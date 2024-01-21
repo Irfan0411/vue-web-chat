@@ -52,8 +52,8 @@ const store = createStore({
         loadMessage(state, {messagesId, value}) {
             state.messages[messagesId] = value
         },
-        addChat(state, {messagesId, chat}) {
-            state.messages[messagesId]?.push(chat)
+        addChat(state, payload) {
+            state.messages[state.openChat.messagesId]?.push(payload)
         },
         findSomeone(state) {
             state.findSomeone ? state.findSomeone = false : state.findSomeone = true
@@ -129,18 +129,18 @@ const store = createStore({
             })
             .catch(err => console.log(err))
         },
-        sendMessage({state, commit, dispatch}, {message, to}) {
+        sendMessage({state, commit}, message) {
             const data = {
                 userId: state.userData.userId,
                 message: {
                     text: message
                 },
-                to
+                to: state.openChat.userId
             }
-            console.log(data);
             axios.post(url + "chat", data)
             .then(res => {
                 console.log(res.data);
+                commit("addChat", res.data)
             })
             .catch(err => console.log(err))
         }
