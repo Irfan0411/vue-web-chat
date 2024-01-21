@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "app",
-  mounted() {
+  beforeCreate() {
     this.$store.dispatch("userData")
   }
 }

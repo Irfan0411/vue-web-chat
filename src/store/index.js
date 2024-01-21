@@ -29,7 +29,7 @@ const store = createStore({
             return state.chatList
         },
         message(state) {
-            return state.messages[state.openChat]
+            return state.messages[state.openChat]?.map((v, i) => ({...v, id: i}))
         },
         findSomeone(state) {
             return state.findSomeone
