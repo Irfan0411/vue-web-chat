@@ -3,7 +3,8 @@ import { io } from "socket.io-client"
 
 export const state = reactive({
     connected: false,
-    newChat: {}
+    newChat: {},
+    chatList: {}
 })
 
 export const socket = io("http://localhost:3000")
@@ -25,4 +26,9 @@ socket.on("ping", (from) => {
 socket.on("chat", (msg) => {
     state.newChat = msg
     console.log(msg);
+})
+
+socket.on("newChat", (chatList) => {
+    state.chatList = chatList
+    console.log(chatList)
 })

@@ -12,11 +12,17 @@ export default {
   computed: {
     newChat() {
       return state.newChat
+    },
+    newChatList() {
+      return state.chatList
     }
   },
   watch: {
     newChat: function() {
-      this.$store.commit("addChat", {messagesId: this.newChat.messagesId, chat: this.newChat})
+      this.$store.commit("loadMessage", {messagesId: this.newChat.messagesId, value: [this.newChat]})
+    },
+    newChatList: function() {
+      this.$store.commit("addChatList", this.newChatList)
     }
   },
   beforeCreate() {

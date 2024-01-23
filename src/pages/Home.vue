@@ -12,12 +12,15 @@
                     <div @click="find" class="i-left"></div>
                     <span class="font-bold">Cari Seseorang</span>
                 </div>
-                <ChatList />
+                <ChatList all />
             </div>
         </div>
         <div class="w-[70%] max-h-full p-4 flex flex-col">
             <HeaderMessages />
             <MessagesBox v-if="messages" />
+            <div v-else class="h-full flex items-center justify-center">
+                <p>Belum ada chat nih, yuk mulai..!</p>
+            </div>
             <Input />
         </div>
     </div>

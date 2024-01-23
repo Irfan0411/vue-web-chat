@@ -18,7 +18,8 @@ const store = createStore({
             openChat: {
                 messagesId: "",
                 username: "",
-                userId: ""
+                userId: "",
+                newChat: false
             },
             findSomeone: false
         }
@@ -52,6 +53,9 @@ const store = createStore({
         },
         loadChatList(state, payload) {
             state.chatList = payload
+        },
+        addChatList(state, payload) {
+            state.chatList.push(payload)
         },
         loadMessage(state, {messagesId, value}) {
             state.messages[messagesId] = value
@@ -91,7 +95,6 @@ const store = createStore({
             .then(res => {
                 commit("userData", res.data)
                 dispatch("loadChatList")
-                console.log(res.data);
                 socket.emit("userId", res.data.userId)
             })
             .catch(err => {
@@ -110,7 +113,6 @@ const store = createStore({
                 }
                 commit("openChat", payload)
                 dispatch("loadMessage")
-                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
@@ -122,7 +124,6 @@ const store = createStore({
                 axios.get(url + "chat/" + messagesId)
                 .then(res => {
                     commit("loadMessage", {messagesId, value: res.data})
-                    console.log(res.data);
                 })
                 .catch(err => console.log(err))
             }
@@ -135,19 +136,50 @@ const store = createStore({
             .catch(err => console.log(err))
         },
         sendMessage({state, commit}, message) {
-            const data = {
+            const dataChat = {
                 userId: state.userData.userId,
                 message: {
                     text: message
                 },
                 to: state.openChat.userId
             }
-            axios.post(url + "chat", data)
-            .then(res => {
-                console.log(res.data);
-                commit("addChat", {messagesId: state.openChat.messagesId, chat: res.data})
-            })
-            .catch(err => console.log(err))
+            const newChat = {
+                to: state.openChat.userId,
+                username: state.openChat.username
+            }
+
+            if(state.openChat.newChat) {
+                axios.post(url + "chatlist", newChat)
+                .then(res => {
+                    const newOpenChat = {
+                        userId: state.openChat.userId,
+                        username: state.openChat.username,
+                        messagesId: res.data.messagesId,
+                        newChat: false
+                    }
+                    commit("openChat", newOpenChat)
+                    axios.post(url + "chat", dataChat)
+                    .then(res => {
+                        commit("addChatList", {
+                            messagesId: state.openChat.messagesId,
+                            conversation: {
+                                userId: state.openChat.userId,
+                                username: state.openChat.username
+                            }
+                        })
+                        commit("loadMessage", {messagesId: state.openChat.messagesId, value: [res.data]})
+                        commit("findSomeone")
+                    })
+                    .catch(err => console.log(err))
+                })
+                .catch(err => console.log(err))
+            } else {
+                axios.post(url + "chat", dataChat)
+                .then(res => {
+                    commit("addChat", {messagesId: state.openChat.messagesId, chat: res.data})
+                })
+                .catch(err => console.log(err))
+            }
         }
     }
 })

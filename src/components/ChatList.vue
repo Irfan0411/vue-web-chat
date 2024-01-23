@@ -2,11 +2,11 @@
     <div class="p-4">
         <input type="text" placeholder="Search" class="rounded-2xl w-full h-10 bg-light-bg px-4 my-2">
         <ul>
-            <li v-for="(chat, i) in chatList" @click="select(i)" class="my-2 flex justify-between">
+            <li v-for="(chat, i) in displayList" @click="select(i)" class="my-2 flex justify-between" :class="all ? userCheck(chat.userId) : ''">
                 <div class="w-10/12 flex gap-2 items-center">
                     <div class="bg-blue-500 w-14 h-14 rounded-full"></div>
                     <div>
-                        <p class="font-bold text-black-text text-lg">{{ chat.conversation.username }}</p>
+                        <p class="font-bold text-black-text text-lg">{{ all ? chat.username : chat.conversation?.username }}</p>
                         <p class="text-brown-text">{{ lastChat[i] }}</p>
                     </div>
                 </div>
@@ -29,25 +29,38 @@ export default {
     },
     computed: {
         chatList() {
-            return this.all ? this.list : this.$store.getters.chatList
+            return this.$store.getters.chatList
         },
         lastChat() {
             return this.$store.getters.lastChat
+        },
+        displayList() {
+            return this.all ? this.list : this.chatList
         }
     },
     props: { all: Boolean },
     methods: {
         select(i) {
             if(this.all) {
-                // chat baru
+                const payload = {
+                    messagesId: "",
+                    username: this.list[i].username,
+                    userId: this.list[i].userId,
+                    newChat: true
+                }
+                this.$store.commit("openChat", payload)
             } else {
                 const payload = {
                     messagesId: this.chatList[i].messagesId,
                     username: this.chatList[i].conversation.username,
-                    userId: this.chatList[i].conversation.userId
+                    userId: this.chatList[i].conversation.userId,
+                    newChat: false
                 }
                 this.$store.commit("openChat", payload)
             }
+        },
+        userCheck(userId) {
+            return this.chatList?.findIndex(user => {return user.conversation?.userId === userId}) !== -1 ? 'hidden' : ''
         }
     },
     mounted() {
