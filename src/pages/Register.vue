@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import axios from "axios"
 import { Vue3Lottie } from "vue3-lottie"
 import AnimationData from "../lottiefile/login-register.json"
 

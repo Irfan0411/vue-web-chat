@@ -12,6 +12,7 @@ const store = createStore({
                 userId: "",
                 username: "",
                 email: "",
+                avatar: ""
             },
             chatList: [],
             messages: {},
@@ -71,12 +72,16 @@ const store = createStore({
         }
     },
     actions: {
-        login(context, payload) {
-            axios.post(url + "login", payload)
+        login(context, {email, password, newUser}) {
+            axios.post(url + "login", {email, password})
             .then(res => {
                 localStorage.setItem("token", res.data.token)
                 context.dispatch("userData")
-                router.push("/")
+                if (newUser) {
+                    router.push("/avatar")
+                } else {
+                    router.push("/")
+                }
             })
             .catch(err => {
                 alert("Forbidden")
@@ -86,7 +91,7 @@ const store = createStore({
         register(context, payload) {
             axios.post(url + "register", payload)
             .then(res => {
-                context.dispatch("login", {email: payload.email, password: payload.password})
+                context.dispatch("login", {email: payload.email, password: payload.password, newUser: true})
             })
             .catch(err => console.log(err))
         },
@@ -101,6 +106,11 @@ const store = createStore({
                 console.log(err);
                 router.push("/login")
             })
+        },
+        updateUser({state}, payload) {
+            axios.post(url + "user/update", payload)
+            .then(res => router.push("/"))
+            .catch(err => console.log(err))
         },
         loadChatList({commit, dispatch}) {
             axios.get(url + "chatlist")
