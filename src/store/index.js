@@ -12,12 +12,13 @@ const store = createStore({
                 userId: "",
                 username: "",
                 email: "",
-                avatar: ""
+                avatar: "",
+                chatList: []
             },
             chatList: [],
             messages: {},
             openChat: {
-                messagesId: "",
+                avatar: "",
                 username: "",
                 userId: "",
                 newChat: false
@@ -36,10 +37,10 @@ const store = createStore({
             return state.chatList
         },
         lastChat(state) {
-            return state.chatList?.map(chat => (state.messages[chat.messagesId]?.slice(-1)[0].message.text))
+            return state.chatList?.map(chat => (state.messages[chat.userId]?.slice(-1)[0].message.text))
         },
         message(state) {
-            return state.messages[state.openChat.messagesId]?.map((v, i) => ({...v, id: i}))
+            return state.messages[state.openChat.userId]?.map((v, i) => ({...v, id: i}))
         },
         findSomeone(state) {
             return state.findSomeone
@@ -58,8 +59,9 @@ const store = createStore({
         addChatList(state, payload) {
             state.chatList.push(payload)
         },
-        loadMessage(state, {messagesId, value}) {
-            state.messages[messagesId] = value
+        loadMessage(state, {receiverId, value}) {
+            state.messages[receiverId] = value
+            console.log(state.messages);
         },
         addChat(state, {messagesId, chat}) {
             state.messages[messagesId]?.push(chat)
@@ -72,11 +74,15 @@ const store = createStore({
         }
     },
     actions: {
-        login(context, {email, password, newUser}) {
+        login({commit, dispatch}, {email, password, newUser}) {
             axios.post(url + "login", {email, password})
             .then(res => {
                 localStorage.setItem("token", res.data.token)
-                context.dispatch("userData")
+                const { token, ...data } = res.data
+                commit("userData", data)
+                dispatch("loadChatList")
+                socket.emit("userId", res.data.userId)
+
                 if (newUser) {
                     router.push("/avatar")
                 } else {
@@ -98,6 +104,7 @@ const store = createStore({
         userData({commit, dispatch}) {
             axios.get(url + "info")
             .then(res => {
+                console.log(res.data);
                 commit("userData", res.data)
                 dispatch("loadChatList")
                 socket.emit("userId", res.data.userId)
@@ -112,16 +119,12 @@ const store = createStore({
             .then(res => router.push("/"))
             .catch(err => console.log(err))
         },
-        loadChatList({commit, dispatch}) {
-            axios.get(url + "chatlist")
+        loadChatList({commit, dispatch, state}) {
+            axios.get(url + "chatlist", {params: {chatList: state.userData.chatList}})
             .then(res => {
+                console.log(res);
                 commit("loadChatList", res.data)
-                const payload = {
-                    messagesId: res.data[0].messagesId,
-                    userId: res.data[0].conversation.userId,
-                    username: res.data[0].conversation.username
-                }
-                commit("openChat", payload)
+                commit("openChat", res.data[0])
                 dispatch("loadMessage")
             })
             .catch(err => {
@@ -130,10 +133,11 @@ const store = createStore({
         },
         loadMessage({state, commit}) {
             for (let i = 0; i < state.chatList.length; i++) {
-                const messagesId = state.chatList[i].messagesId
-                axios.get(url + "chat/" + messagesId)
+                const receiverId = state.chatList[i].userId
+                axios.get(url + "chat/" + receiverId)
                 .then(res => {
-                    commit("loadMessage", {messagesId, value: res.data})
+                    console.log(res.data);
+                    commit("loadMessage", {receiverId, value: res.data})
                 })
                 .catch(err => console.log(err))
             }

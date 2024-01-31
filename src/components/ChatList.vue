@@ -4,9 +4,11 @@
         <ul>
             <li v-for="(chat, i) in displayList" @click="select(i)" class="my-2 flex justify-between" :class="all ? userCheck(chat.userId) : ''">
                 <div class="w-10/12 flex gap-2 items-center">
-                    <div class="bg-blue-500 w-14 h-14 rounded-full"></div>
+                    <div class="rounded-full overflow-hidden w-14 h-14">
+                        <img :src="'http://localhost:3000/files/'+chat?.avatar" alt="avatar">
+                    </div>
                     <div>
-                        <p class="font-bold text-black-text text-lg">{{ all ? chat.username : chat.conversation?.username }}</p>
+                        <p class="font-bold text-black-text text-lg">{{ chat?.username }}</p>
                         <p class="text-brown-text">{{ lastChat[i] }}</p>
                     </div>
                 </div>
@@ -43,24 +45,25 @@ export default {
         select(i) {
             if(this.all) {
                 const payload = {
-                    messagesId: "",
+                    receiverId: "",
                     username: this.list[i].username,
                     userId: this.list[i].userId,
+                    avatar: this.list[i].avatar,
                     newChat: true
                 }
                 this.$store.commit("openChat", payload)
             } else {
                 const payload = {
                     messagesId: this.chatList[i].messagesId,
-                    username: this.chatList[i].conversation.username,
-                    userId: this.chatList[i].conversation.userId,
+                    username: this.chatList[i].username,
+                    userId: this.chatList[i].userId,
                     newChat: false
                 }
                 this.$store.commit("openChat", payload)
             }
         },
         userCheck(userId) {
-            return this.chatList?.findIndex(user => {return user.conversation?.userId === userId}) !== -1 ? 'hidden' : ''
+            return this.chatList?.findIndex(user => {return user?.userId === userId}) !== -1 ? 'hidden' : ''
         }
     },
     mounted() {
@@ -69,6 +72,9 @@ export default {
             .then(res => this.list = res.data)
             .catch(err => console.log(err))
         }
+        setTimeout(() => {
+            console.log(this.chatList);
+        }, 1000);
     }
 }
 </script>
