@@ -18,8 +18,8 @@
                 <div @click="select('avatar5.png')" :class="avatar === 'avatar5.png' ? 'border-4 border-black-text rounded-full' : ''">
                     <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar5.png" alt="avatar">
                 </div>
-                <div @click="select('avatar6.png')" :class="avatar === 'avatar6.png' ? 'border-4 border-black-text rounded-full' : ''">
-                    <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar6.png" alt="avatar">
+                <div @click="select('custom')" :class="avatar === 'custom' ? 'border-4 border-black-text rounded-full p-1' : ''">
+                    <InputAvatar :selected="avatar === 'custom'" @selectImg="img => selectCustomImg(img)" />
                 </div>
             </div>
             <div class="flex justify-center mt-8">   
@@ -33,21 +33,32 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Next from '../components/icon/Next.vue';
+import InputAvatar from '../components/InputAvatar.vue';
 export default {
     name: "select-avatar",
     data() {
         return {
-            avatar: ""
+            avatar: "",
+            customImg: null
         }
     },
-    components: { Next },
+    components: { Next, InputAvatar },
     methods: {
         select(x) {
             this.avatar = x
         },
+        selectCustomImg(img) {
+            console.log(img);
+            this.customImg = img
+        },
         next() {
-            this.$store.dispatch("updateUser", {username: this.userData.username, avatar: this.avatar})
+            if(this.avatar === 'custom') {
+                this.$store.dispatch("updateCustomAvatar", this.customImg)
+            } else {
+                this.$store.dispatch("updateUser", {username: this.userData.username, avatar: this.avatar})
+            }
         }
     },
     computed: {

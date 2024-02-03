@@ -2,6 +2,7 @@ import axios from "axios";
 import { createStore } from "vuex";
 import router from "../router"
 import { socket } from "../socket";
+import Compressor from "compressorjs";
 
 const url = "http://localhost:3000/"
 
@@ -40,7 +41,7 @@ const store = createStore({
             return state.chatList?.map(chat => (state.messages[chat.userId]?.slice(-1)[0].message.text))
         },
         message(state) {
-            return state.messages[state.openChat.userId]?.map((v, i) => ({...v, id: i}))
+            return state.messages[state.openChat?.userId]?.map((v, i) => ({...v, id: i}))
         },
         findSomeone(state) {
             return state.findSomeone
@@ -63,8 +64,8 @@ const store = createStore({
             state.messages[receiverId] = value
             console.log(state.messages);
         },
-        addChat(state, {messagesId, chat}) {
-            state.messages[messagesId]?.push(chat)
+        addChat(state, {receiverId, chat}) {
+            state.messages[receiverId]?.push(chat)
         },
         findSomeone(state) {
             state.findSomeone ? state.findSomeone = false : state.findSomeone = true
@@ -114,10 +115,29 @@ const store = createStore({
                 router.push("/login")
             })
         },
-        updateUser({state}, payload) {
+        updateUser(context, payload) {
             axios.post(url + "user/update", payload)
             .then(res => router.push("/"))
             .catch(err => console.log(err))
+        },
+        updateCustomAvatar({state, dispatch}, img) {
+            new Compressor(img, {
+                quality: 0.6,
+                mimeType: "image/png",
+                success(res) {
+                    const formData = new FormData()
+                    formData.append("avatar", res, state.userData.userId+".png")
+                    axios.post(url + "user/avatar", formData)
+                    .then(res => {
+                        console.log(res.data)
+                        dispatch("updateUser", {username: state.userData.username, avatar: state.userData.userId+".png"})
+                    })
+                    .catch(err => console.log(err))
+                },
+                error(err) {
+                    console.log(err)
+                }
+            })
         },
         loadChatList({commit, dispatch, state}) {
             axios.get(url + "chatlist", {params: {chatList: state.userData.chatList}})

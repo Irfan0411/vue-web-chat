@@ -1,12 +1,16 @@
 <template>
   <div class="h-[10%] px-4 box-border flex justify-between items-center bg-blue-200 rounded-md">
-    <div class="flex gap-2 items-center">
-      <div class="rounded-full overflow-hidden w-12 h-12">
-        <img :src="'http://localhost:3000/files/'+openChat.avatar" alt="avatar">
+    <div v-if="openChat" class="flex gap-2 items-center">
+      <div>
+        <img
+          :src="'http://localhost:3000/files/avatar/'+openChat.avatar"
+          class="rounded-full overflow-hidden min-w-12 h-12 object-cover"
+          alt="avatar"
+        >
       </div>
       <p class="font-extrabold text-xl text-black-text">{{ openChat.username }}</p>
     </div>
-    <div class="flex gap-2">
+    <div v-if="openChat" class="flex gap-2">
       <div class="bg-blue-300 w-9 h-9 rounded-full flex justify-center items-center">
         <div class="i-telephone"></div>
       </div>

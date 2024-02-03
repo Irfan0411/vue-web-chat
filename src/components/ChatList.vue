@@ -4,8 +4,12 @@
         <ul>
             <li v-for="(chat, i) in displayList" @click="select(i)" class="my-2 flex justify-between" :class="all ? userCheck(chat.userId) : ''">
                 <div class="w-10/12 flex gap-2 items-center">
-                    <div class="rounded-full overflow-hidden w-14 h-14">
-                        <img :src="'http://localhost:3000/files/'+chat?.avatar" alt="avatar">
+                    <div>
+                        <img
+                            :src="'http://localhost:3000/files/avatar/'+chat?.avatar"
+                            class="rounded-full overflow-hidden w-14 h-14"
+                            alt="avatar"
+                        >
                     </div>
                     <div>
                         <p class="font-bold text-black-text text-lg">{{ chat?.username }}</p>
@@ -54,9 +58,9 @@ export default {
                 this.$store.commit("openChat", payload)
             } else {
                 const payload = {
-                    messagesId: this.chatList[i].messagesId,
                     username: this.chatList[i].username,
                     userId: this.chatList[i].userId,
+                    avatar: this.chatList[i].avatar, 
                     newChat: false
                 }
                 this.$store.commit("openChat", payload)
