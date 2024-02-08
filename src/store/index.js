@@ -62,10 +62,9 @@ const store = createStore({
         },
         loadMessage(state, {receiverId, value}) {
             state.messages[receiverId] = value
-            console.log(state.messages);
         },
-        addChat(state, {receiverId, chat}) {
-            state.messages[receiverId]?.push(chat)
+        addChat(state, {receiverId, value}) {
+            state.messages[receiverId]?.push(value)
         },
         findSomeone(state) {
             state.findSomeone ? state.findSomeone = false : state.findSomeone = true
@@ -105,7 +104,6 @@ const store = createStore({
         userData({commit, dispatch}) {
             axios.get(url + "info")
             .then(res => {
-                console.log(res.data);
                 commit("userData", res.data)
                 dispatch("loadChatList")
                 socket.emit("userId", res.data.userId)
@@ -129,7 +127,6 @@ const store = createStore({
                     formData.append("avatar", res, state.userData.userId+".png")
                     axios.post(url + "user/avatar", formData)
                     .then(res => {
-                        console.log(res.data)
                         dispatch("updateUser", {username: state.userData.username, avatar: state.userData.userId+".png"})
                     })
                     .catch(err => console.log(err))
@@ -142,7 +139,6 @@ const store = createStore({
         loadChatList({commit, dispatch, state}) {
             axios.get(url + "chatlist", {params: {chatList: state.userData.chatList}})
             .then(res => {
-                console.log(res);
                 commit("loadChatList", res.data)
                 commit("openChat", res.data[0])
                 dispatch("loadMessage")
@@ -156,7 +152,6 @@ const store = createStore({
                 const receiverId = state.chatList[i].userId
                 axios.get(url + "chat/" + receiverId)
                 .then(res => {
-                    console.log(res.data);
                     commit("loadMessage", {receiverId, value: res.data})
                 })
                 .catch(err => console.log(err))
@@ -177,31 +172,14 @@ const store = createStore({
                 },
                 to: state.openChat.userId
             }
-            const newChat = {
-                to: state.openChat.userId,
-                username: state.openChat.username
-            }
-
             if(state.openChat.newChat) {
-                axios.post(url + "chatlist", newChat)
+                axios.post(url + "chatlist", {to: state.openChat.userId})
                 .then(res => {
-                    const newOpenChat = {
-                        userId: state.openChat.userId,
-                        username: state.openChat.username,
-                        messagesId: res.data.messagesId,
-                        newChat: false
-                    }
-                    commit("openChat", newOpenChat)
                     axios.post(url + "chat", dataChat)
                     .then(res => {
-                        commit("addChatList", {
-                            messagesId: state.openChat.messagesId,
-                            conversation: {
-                                userId: state.openChat.userId,
-                                username: state.openChat.username
-                            }
-                        })
-                        commit("loadMessage", {messagesId: state.openChat.messagesId, value: [res.data]})
+                        const {newChat, ...other} = state.openChat
+                        commit("addChatList", other)
+                        commit("loadMessage", {receiverId: state.openChat.userId, value: [res.data]})
                         commit("findSomeone")
                     })
                     .catch(err => console.log(err))
@@ -210,9 +188,18 @@ const store = createStore({
             } else {
                 axios.post(url + "chat", dataChat)
                 .then(res => {
-                    commit("addChat", {messagesId: state.openChat.messagesId, chat: res.data})
+                    commit("addChat", {receiverId: state.openChat.userId, value: res.data})
                 })
                 .catch(err => console.log(err))
+            }
+        },
+        messageReceived({state, commit}, {receiverId, value}) {
+            console.log({receiverId, value});
+            console.log(state.messages[receiverId]);
+            if (state.messages[receiverId]) {
+                commit("addChat", {receiverId, value: value[0]})
+            } else {
+                commit("loadMessage", {receiverId, value})
             }
         }
     }

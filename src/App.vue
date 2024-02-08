@@ -19,7 +19,7 @@ export default {
   },
   watch: {
     newChat: function() {
-      this.$store.commit("loadMessage", {receiverId: this.newChat.receiverId, value: [this.newChat]})
+      this.$store.dispatch("messageReceived", {receiverId: this.newChat.senderId, value: [this.newChat]})
     },
     newChatList: function() {
       this.$store.commit("addChatList", this.newChatList)

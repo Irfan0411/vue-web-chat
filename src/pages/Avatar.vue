@@ -4,19 +4,19 @@
             <p class="text-center font-bold text-4xl mb-10">Select Your Avatar</p>
             <div class="w-[70%] mx-auto grid grid-cols-3 gap-4 justify-items-center">
                 <div @click="select('avatar1.png')" :class="avatar === 'avatar1.png' ? 'border-4 border-black-text rounded-full' : ''">
-                    <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar1.png" alt="avatar">
+                    <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar/avatar1.png" alt="avatar">
                 </div>
                 <div @click="select('avatar2.png')" :class="avatar === 'avatar2.png' ? 'border-4 border-black-text rounded-full' : ''">
-                    <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar2.png" alt="avatar">
+                    <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar/avatar2.png" alt="avatar">
                 </div>
                 <div @click="select('avatar3.png')" :class="avatar === 'avatar3.png' ? 'border-4 border-black-text rounded-full' : ''">
-                    <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar3.png" alt="avatar">
+                    <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar/avatar3.png" alt="avatar">
                 </div>
                 <div @click="select('avatar4.png')" :class="avatar === 'avatar4.png' ? 'border-4 border-black-text rounded-full' : ''">
-                    <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar4.png" alt="avatar">
+                    <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar/avatar4.png" alt="avatar">
                 </div>
                 <div @click="select('avatar5.png')" :class="avatar === 'avatar5.png' ? 'border-4 border-black-text rounded-full' : ''">
-                    <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar5.png" alt="avatar">
+                    <img class="min-w-36 h-36 rounded-full overflow-hidden" src="http://localhost:3000/files/avatar/avatar5.png" alt="avatar">
                 </div>
                 <div @click="select('custom')" :class="avatar === 'custom' ? 'border-4 border-black-text rounded-full p-1' : ''">
                     <InputAvatar :selected="avatar === 'custom'" @selectImg="img => selectCustomImg(img)" />
