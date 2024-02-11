@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         send() {
-            if(this.text) this.$store.dispatch("sendMessage", this.text)
+            if(this.text) this.$store.dispatch("chat/sendMessage", this.text)
             this.text = ""
         },
         toggle() {

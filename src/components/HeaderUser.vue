@@ -18,16 +18,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     name: "header-user",
     computed: {
-        userData() {
-            return this.$store.getters.userData
-        }
+      ...mapGetters({
+        userData: 'user/userData',
+        findSomeone: 'chat/findSomeone'
+      }),
     },
     methods: {
         find() {
-            this.$store.commit("findSomeone")
+            this.$store.commit("chat/findSomeone", !this.findSomeone)
         }
     }
 }

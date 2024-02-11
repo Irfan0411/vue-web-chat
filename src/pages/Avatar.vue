@@ -55,15 +55,15 @@ export default {
         },
         next() {
             if(this.avatar === 'custom') {
-                this.$store.dispatch("updateCustomAvatar", this.customImg)
+                this.$store.dispatch("user/updateCustomAvatar", this.customImg)
             } else {
-                this.$store.dispatch("updateUser", {username: this.userData.username, avatar: this.avatar})
+                this.$store.dispatch("user/updateUser", {username: this.userData.username, avatar: this.avatar})
             }
         }
     },
     computed: {
         userData() {
-            return this.$store.getters.userData
+            return this.$store.getters['user/userData']
         }
     }
 }

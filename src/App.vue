@@ -19,14 +19,14 @@ export default {
   },
   watch: {
     newChat: function() {
-      this.$store.dispatch("messageReceived", {receiverId: this.newChat.senderId, value: [this.newChat]})
+      this.$store.dispatch("chat/messageReceived", {receiverId: this.newChat.senderId, value: [this.newChat]})
     },
     newChatList: function() {
-      this.$store.commit("addChatList", this.newChatList)
+      this.$store.commit("chat/newChatList", this.newChatList)
     }
   },
   beforeCreate() {
-    this.$store.dispatch("userData")
+    this.$store.dispatch("user/userData")
   }
 }
 </script>

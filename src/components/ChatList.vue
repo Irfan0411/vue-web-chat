@@ -13,7 +13,7 @@
                     </div>
                     <div>
                         <p class="font-bold text-black-text text-lg">{{ chat?.username }}</p>
-                        <p class="text-brown-text">{{ lastChat[i] }}</p>
+                        <p v-if="!all" class="text-brown-text">{{ lastChat[i] }}</p>
                     </div>
                 </div>
                 <p class="mt-2 text-sm text-brown-text">10.20</p>
@@ -24,6 +24,7 @@
 
 <script>
 import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 export default {
     name: "chat-list",
@@ -34,12 +35,10 @@ export default {
         }
     },
     computed: {
-        chatList() {
-            return this.$store.getters.chatList
-        },
-        lastChat() {
-            return this.$store.getters.lastChat
-        },
+        ...mapGetters({
+            chatList: 'chat/chatList',
+            lastChat: 'chat/lastChat'
+        }),
         displayList() {
             return this.all ? this.list : this.chatList
         }
@@ -55,7 +54,7 @@ export default {
                     avatar: this.list[i].avatar,
                     newChat: true
                 }
-                this.$store.commit("openChat", payload)
+                this.$store.commit("chat/openMessage", payload)
             } else {
                 const payload = {
                     username: this.chatList[i].username,
@@ -63,7 +62,7 @@ export default {
                     avatar: this.chatList[i].avatar, 
                     newChat: false
                 }
-                this.$store.commit("openChat", payload)
+                this.$store.commit("chat/openMessage", payload)
             }
         },
         userCheck(userId) {

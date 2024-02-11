@@ -32,25 +32,25 @@ import ChatList from "../components/ChatList.vue"
 import Input from "../components/Input.vue"
 import HeaderUser from "../components/HeaderUser.vue"
 import HeaderMessages from "../components/HeaderMessages.vue"
+import { mapGetters } from "vuex"
 
 export default {
     name: "home",
     components: { MessagesBox, ChatList, Input, HeaderUser, HeaderMessages },
     methods: {
         find() {
-            this.$store.commit("findSomeone")
+            this.$store.commit("chat/findSomeone", !this.findSomeone)
         }
     },
     computed: {
-        userData() {
-            return this.$store.getters.userData
-        },
-        findSomeone() {
-            return this.$store.getters.findSomeone
-        },
-        messages() {
-            return this.$store.getters.message
-        }
+        ...mapGetters({
+            userData: 'user/userData',
+            findSomeone: 'chat/findSomeone',
+            messages: 'chat/message'
+        })
+    },
+    mounted() {
+        setTimeout(()=> console.log(this.messages), 1000)
     }
 }
 </script>

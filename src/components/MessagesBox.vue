@@ -25,16 +25,16 @@
 </template>
 <script>
 import { DynamicScroller, DynamicScrollerItem } from "vue-virtual-scroller"
+import { mapGetters } from "vuex"
+
 export default {
     name: "messages-box",
     components: { DynamicScroller, DynamicScrollerItem },
     computed: {
-        messages() {
-            return this.$store.getters.message
-        },
-        userId() {
-            return this.$store.getters.userId
-        }
+        ...mapGetters({
+            messages: 'chat/message',
+            userId: 'user/userId'
+        })
     },
     methods: {
         scrollToBottom() {

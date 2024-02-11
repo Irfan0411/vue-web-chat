@@ -56,7 +56,7 @@ export default {
     methods: {
         register() {
             if (this.password === this.confirmPassword) {
-                this.$store.dispatch("register", {email: this.email, username: this.username, password: this.password})
+                this.$store.dispatch("user/register", {email: this.email, username: this.username, password: this.password})
             } else {
                 alert("password and confirm password not match!!")
             }
