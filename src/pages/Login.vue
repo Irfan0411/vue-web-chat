@@ -1,13 +1,13 @@
 <template>
     <div class="w-full h-full flex p-2">
-        <div class="w-[60%] flex justify-center items-center">
+        <div class="w-[50%] lg:w-[60%] hidden md:flex justify-center items-center">
             <Vue3Lottie
                 :animationData="AnimationData"
                 :height="500"
                 :width="500"
             />
         </div>
-        <div class="w-[40%] h-full bg-white rounded-xl py-14 px-20 flex flex-col justify-between items-center">
+        <div class="w-full md:w-[50%] lg:w-[40%] h-full bg-white rounded-xl py-10 px-10 sm:py-14 sm:px-20 flex flex-col justify-between items-center"> 
             <img src="/icon/chat-icon.png" alt="icon" class="w-fit h-fit">
             <div class="w-full">
                 <p class="text-center text-4xl font-bold mb-2">Welcome back!</p>
@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import axios from "axios"
 import { Vue3Lottie } from "vue3-lottie"
 import AnimationData from '../lottiefile/login-register.json'
 export default {
