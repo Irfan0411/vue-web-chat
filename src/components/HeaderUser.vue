@@ -13,7 +13,10 @@
         <p class="font-bold text-brown-text">{{ userData.email }}</p>
       </div>
     </div>
-    <div @click="find" class="i-add relative top-2 right-2"></div>
+    <div class="flex items-center gap-4">
+      <div @click="find" class="i-add"></div>
+      <div @click="logout" class="i-logout"></div>
+    </div>
   </div>
 </template>
 
@@ -29,7 +32,10 @@ export default {
     },
     methods: {
         find() {
-            this.$store.commit("chat/findSomeone", !this.findSomeone)
+          this.$store.commit("chat/findSomeone", !this.findSomeone)
+        },
+        logout() {
+          this.$router.push("/login")
         }
     }
 }

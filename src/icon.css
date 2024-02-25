@@ -59,3 +59,10 @@
     background-image: url('/left.svg');
     background-size: contain;
 }
+.i-logout{
+    min-width: 20px;
+    height: 20px;
+    background-image: url('/logout.svg');
+    background-size: contain;
+
+}
