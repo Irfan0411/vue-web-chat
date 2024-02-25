@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[10%] flex justify-between items-center mb-4">
+  <div class="h-[70px] flex justify-between items-center mb-4">
     <div class="flex gap-4 items-center">
       <div>
         <img
