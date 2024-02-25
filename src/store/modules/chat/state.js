@@ -7,5 +7,6 @@ export default {
         userId: "",
         newChat: false
     },
-    findSomeone: false
+    findSomeone: false,
+    isOpen: false
 }

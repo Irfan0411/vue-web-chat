@@ -5,7 +5,6 @@ export default {
     loadChatList({commit, dispatch, rootState}) {
         axios.get(url + "chatlist", {params: {chatList: rootState.user.user.chatList}})
         .then(res => {
-            console.log(res.data);
             commit("setChatList", res.data)     /* simpan data list chat */
             commit("openMessage", res.data[0])     /* buka chat pertama */
             dispatch("loadMessage")     /* ambil semua data chat dari setiap user di chatList */
@@ -19,7 +18,6 @@ export default {
             const receiverId = state.chatList[i].userId
             axios.get(url + "chat/" + receiverId)
             .then(res => {
-                console.log(res.data);
                 commit("setMessage", {id: receiverId, value: res.data})     /* simpan data chat dari setiap user */
             })
             .catch(err => console.log(err))
@@ -62,8 +60,6 @@ export default {
         }
     },
     messageReceived({state, commit}, {receiverId, value}) {
-        console.log({receiverId, value});
-        console.log(state.messages[receiverId]);
         if (state.messages[receiverId]) {       /* jika user sudah ada dalam daftar chatList */
             commit("newMessage", {id: receiverId, value: value[0]}) 
         } else {

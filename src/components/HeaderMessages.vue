@@ -1,6 +1,7 @@
 <template>
-  <div class="h-[10%] px-4 box-border flex justify-between items-center bg-blue-200 rounded-md">
+  <div class="h-[70px] px-4 box-border flex justify-between items-center bg-blue-200 rounded-md">
     <div v-if="openMessage" class="flex gap-2 items-center">
+      <div @click="back" class="i-back sm:hidden"></div>
       <div>
         <img
           :src="'http://localhost:3000/files/avatar/'+openMessage.avatar"
@@ -33,8 +34,10 @@ export default {
       openMessage: 'chat/openMessage'
     })
   },
-  mounted() {
-    setTimeout(()=> console.log(this.openMessage), 1000)
+  methods: {
+    back() {
+      this.$store.commit("chat/isOpen", false)
+    }
   }
 }
 </script>

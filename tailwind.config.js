@@ -17,6 +17,9 @@ export default {
         "brown-text": "#A4A1A4",
         "icon-blue": "#1842CA",
         "icon-brown": "#8D83A8"
+      },
+      screens: {
+        "md": "900px"
       }
     },
   },

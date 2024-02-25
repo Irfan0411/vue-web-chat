@@ -50,7 +50,6 @@ export default {
             this.avatar = x
         },
         selectCustomImg(img) {
-            console.log(img);
             this.customImg = img
         },
         next() {

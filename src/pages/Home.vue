@@ -1,27 +1,29 @@
 <template>
-    <div class="flex w-full h-full max-h-svh">
-        <div class="h-full w-[30%] min-w-96 relative">
-            <div class="pl-4 py-4 flex flex-col h-full">
-                <HeaderUser />
-                <div class="w-full h-full rounded-3xl bg-white">
-                    <ChatList />
+    <div class="w-full max-h-full h-full relative overflow-hidden">
+        <div class="sm:grid grid-cols-10 lg:grid-cols-3 gap-8 sm:gap-4 w-full max-h-full h-full">
+            <div :class="`${isOpen ? 'hidden' : 'block'} sm:block h-full col-span-5 md:col-span-4 lg:col-span-1 py-4 pl-4 pr-4 sm:pr-0`">
+                <div class="flex flex-col h-full">
+                    <HeaderUser />
+                    <div class="w-full h-full rounded-3xl bg-white">
+                        <ChatList />
+                    </div>
                 </div>
             </div>
-            <div class="w-full h-full bg-white absolute transition-all ease-in-out duration-300 top-0" :class="findSomeone ? 'left-0' : '-left-full'">
-                <div class="flex gap-2 items-center w-full h-14 px-4">
-                    <div @click="find" class="i-left"></div>
-                    <span class="font-bold">Cari Seseorang</span>
+            <div :class="`max-h-screen h-full ${isOpen ? 'flex' : 'hidden'} sm:flex flex-col col-span-5 md:col-span-6 lg:col-span-2 py-4 pr-4 pl-4 sm:pl-0`">
+                <HeaderMessages />
+                <MessagesBox v-if="messages" />
+                <div v-else class="h-full flex items-center justify-center">
+                    <p>Belum ada chat nih, yuk mulai..!</p>
                 </div>
-                <ChatList all />
+                <Input />
             </div>
         </div>
-        <div class="w-[70%] max-h-full p-4 flex flex-col">
-            <HeaderMessages />
-            <MessagesBox v-if="messages" />
-            <div v-else class="h-full flex items-center justify-center">
-                <p>Belum ada chat nih, yuk mulai..!</p>
+        <div class="w-full sm:w-1/2 h-full bg-white absolute transition-all ease-in-out duration-300 top-0" :class="findSomeone ? 'left-0' : '-left-full'">
+            <div class="flex gap-2 items-center w-full h-14 px-4">
+                <div @click="find" class="i-left"></div>
+                <span class="font-bold">Cari Seseorang</span>
             </div>
-            <Input />
+            <ChatList all />
         </div>
     </div>
 </template>
@@ -46,11 +48,9 @@ export default {
         ...mapGetters({
             userData: 'user/userData',
             findSomeone: 'chat/findSomeone',
-            messages: 'chat/message'
+            messages: 'chat/message',
+            isOpen: 'chat/isOpen'
         })
     },
-    mounted() {
-        setTimeout(()=> console.log(this.messages), 1000)
-    }
 }
 </script>

@@ -16,5 +16,8 @@ export default {
     },
     findSomeone(state, payload) {
         state.findSomeone = payload
+    },
+    isOpen(state, payload) {
+        state.isOpen = payload
     }
 }

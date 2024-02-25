@@ -13,5 +13,8 @@ export default {
     },
     openMessage(state) {
         return state.openMessage
+    },
+    isOpen(state) {
+        return state.isOpen
     }
 }

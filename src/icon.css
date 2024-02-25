@@ -53,3 +53,9 @@
     background-image: url('/left.svg');
     background-size: contain;
 }
+.i-back{
+    min-width: 30px;
+    height: 30px;
+    background-image: url('/left.svg');
+    background-size: contain;
+}

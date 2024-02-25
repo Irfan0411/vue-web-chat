@@ -64,6 +64,7 @@ export default {
                 }
                 this.$store.commit("chat/openMessage", payload)
             }
+            this.$store.commit("chat/isOpen", true)
         },
         userCheck(userId) {
             return this.chatList?.findIndex(user => {return user?.userId === userId}) !== -1 ? 'hidden' : ''
@@ -75,9 +76,6 @@ export default {
             .then(res => this.list = res.data)
             .catch(err => console.log(err))
         }
-        setTimeout(() => {
-            console.log(this.chatList);
-        }, 1000);
     }
 }
 </script>
