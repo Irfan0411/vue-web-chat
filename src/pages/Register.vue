@@ -65,6 +65,13 @@ export default {
             this.$router.push("/login")
         }
     },
+    mounted() {
+        window.addEventListener("keydown", (e)=> {
+            if(e.key === "Enter" && this.email && this.username && this.password && this.confirmPassword) {
+                this.register()
+            }
+        })
+    }
 }
 </script>
 

@@ -45,6 +45,11 @@ export default {
     },
     mounted() {
         localStorage.removeItem('token')
+        window.addEventListener("keydown", (e)=> {
+            if(e.key === "Enter" && this.email && this.password) {
+                this.login()
+            }
+        })
     },
     methods: {
         login() {
@@ -52,8 +57,11 @@ export default {
         },
         toRegister() {
             this.$router.push("/register")
+        },
+        toggle() {
+            this.focus ? this.focus = false : this.focus = true
         }
-    }
+    },
 }
 </script>
 
