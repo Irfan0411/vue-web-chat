@@ -64,5 +64,40 @@
     height: 20px;
     background-image: url('/logout.svg');
     background-size: contain;
-
+}
+.i-view{
+    min-width: 40px;
+    height: 40px;
+    background-image: url('/view.svg');
+    background-size: contain;
+}
+.i-x{
+    min-width: 35px;
+    height: 35px;
+    background-image: url('/x.svg');
+    background-size: contain;
+}
+.i-zoomin{
+    min-width: 35px;
+    height: 35px;
+    background-image: url('/zoom-in.svg');
+    background-size: contain;
+}
+.i-zoomout{
+    min-width: 35px;
+    height: 35px;
+    background-image: url('/zoom-out.svg');
+    background-size: contain;
+}
+.i-rotate-right{
+    min-width: 30px;
+    height: 30px;
+    background-image: url('/rotate-right.svg');
+    background-size: contain;
+}
+.i-rotate-left{
+    min-width: 30px;
+    height: 30px;
+    background-image: url('/rotate-left.svg');
+    background-size: contain;
 }

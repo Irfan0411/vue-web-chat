@@ -19,5 +19,8 @@ export default {
     },
     sendImage(state) {
         return state.sendImage
+    },
+    viewImage(state) {
+        return state.viewImage
     }
 }

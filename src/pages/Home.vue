@@ -26,6 +26,7 @@
             <ChatList all />
         </div>
         <InputImage v-if="sendImage.isOpen" :preview="sendImage.preview" />
+        <ImageFullscreen v-if="viewImage" :src="viewImage" />
     </div>
 </template>
 
@@ -36,11 +37,12 @@ import Input from "../components/Input.vue"
 import HeaderUser from "../components/HeaderUser.vue"
 import HeaderMessages from "../components/HeaderMessages.vue"
 import InputImage from "../components/InputImage.vue"
+import ImageFullscreen from "../components/ImageFullscreen.vue"
 import { mapGetters } from "vuex"
 
 export default {
     name: "home",
-    components: { MessagesBox, ChatList, Input, HeaderUser, HeaderMessages, InputImage },
+    components: { MessagesBox, ChatList, Input, HeaderUser, HeaderMessages, InputImage, ImageFullscreen },
     methods: {
         find() {
             this.$store.commit("chat/findSomeone", !this.findSomeone)
@@ -52,8 +54,9 @@ export default {
             findSomeone: 'chat/findSomeone',
             messages: 'chat/message',
             isOpen: 'chat/isOpen',
-            sendImage: 'chat/sendImage'
+            sendImage: 'chat/sendImage',
+            viewImage: 'chat/viewImage'
         })
     },
 }
-</script>
+</script>../components/ImageFullscreen.vue

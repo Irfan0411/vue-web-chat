@@ -14,11 +14,9 @@
                 >
                     <div class="w-full py-1 flex" :class="item.senderId === userId ? 'justify-end' : 'justify-start'">
                         <div class="w-max max-w-[80%] py-1 px-3 bg-white rounded-2xl">
-                            <img
+                            <Image
                                 v-if="item.message.image"
-                                :src="'http://localhost:3000/files/media/'+item.message.image"
-                                class="max-w-56 object-contain mt-2"
-                                alt="media"
+                                :src="item.message.image"
                             />
                             <p>{{ item.message?.text }}</p>
                         </div>
@@ -32,6 +30,7 @@
 <script>
 import { DynamicScroller, DynamicScrollerItem } from "vue-virtual-scroller"
 import { mapGetters } from "vuex"
+import Image from "./Image.vue"
 
 export default {
     name: "messages-box",

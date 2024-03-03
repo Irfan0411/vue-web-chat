@@ -44,5 +44,11 @@ export default {
     },
     deleteSendImage(state) {
         state.sendImage = { img: null, preview: "", isOpen: false}
+    },
+    setViewImage(state, payload) {
+        state.viewImage = payload
+    },
+    deleteViewImage(state) {
+        state.viewImage = ""
     }
 }

@@ -13,5 +13,6 @@ export default {
         img: null,
         preview: "",
         isOpen: false
-    }
+    },
+    viewImage: ""
 }
