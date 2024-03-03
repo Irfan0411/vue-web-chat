@@ -16,5 +16,8 @@ export default {
     },
     isOpen(state) {
         return state.isOpen
+    },
+    sendImage(state) {
+        return state.sendImage
     }
 }

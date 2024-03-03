@@ -8,5 +8,10 @@ export default {
         newChat: false
     },
     findSomeone: false,
-    isOpen: false
+    isOpen: false,
+    sendImage: {
+        img: null,
+        preview: "",
+        isOpen: false
+    }
 }

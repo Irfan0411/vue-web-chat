@@ -1,3 +1,6 @@
+import Compressor from "compressorjs";
+import {toRefs} from "vue"
+
 export default {
     setChatList(state, payload) {
         state.chatList = payload
@@ -19,5 +22,27 @@ export default {
     },
     isOpen(state, payload) {
         state.isOpen = payload
+    },
+    setSendImage(state, payload) {
+        state.sendImage.isOpen = true
+        console.log("is open");
+        new Compressor(payload, {
+            quality: 0.6,
+            mimeType: "image/jpg",
+            success(res) {
+                state.sendImage = {
+                    img: res,
+                    preview: URL.createObjectURL(res),
+                    isOpen: true
+                }
+                console.log("is compress");
+            },
+            error(err) {
+                console.log(err)
+            }
+        })
+    },
+    deleteSendImage(state) {
+        state.sendImage = { img: null, preview: "", isOpen: false}
     }
 }

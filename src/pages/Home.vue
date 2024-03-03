@@ -25,6 +25,7 @@
             </div>
             <ChatList all />
         </div>
+        <InputImage v-if="sendImage.isOpen" :preview="sendImage.preview" />
     </div>
 </template>
 
@@ -34,11 +35,12 @@ import ChatList from "../components/ChatList.vue"
 import Input from "../components/Input.vue"
 import HeaderUser from "../components/HeaderUser.vue"
 import HeaderMessages from "../components/HeaderMessages.vue"
+import InputImage from "../components/InputImage.vue"
 import { mapGetters } from "vuex"
 
 export default {
     name: "home",
-    components: { MessagesBox, ChatList, Input, HeaderUser, HeaderMessages },
+    components: { MessagesBox, ChatList, Input, HeaderUser, HeaderMessages, InputImage },
     methods: {
         find() {
             this.$store.commit("chat/findSomeone", !this.findSomeone)
@@ -49,7 +51,8 @@ export default {
             userData: 'user/userData',
             findSomeone: 'chat/findSomeone',
             messages: 'chat/message',
-            isOpen: 'chat/isOpen'
+            isOpen: 'chat/isOpen',
+            sendImage: 'chat/sendImage'
         })
     },
 }

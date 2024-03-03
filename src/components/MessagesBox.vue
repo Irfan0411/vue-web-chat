@@ -14,6 +14,12 @@
                 >
                     <div class="w-full py-1 flex" :class="item.senderId === userId ? 'justify-end' : 'justify-start'">
                         <div class="w-max max-w-[80%] py-1 px-3 bg-white rounded-2xl">
+                            <img
+                                v-if="item.message.image"
+                                :src="'http://localhost:3000/files/media/'+item.message.image"
+                                class="max-w-56 object-contain mt-2"
+                                alt="media"
+                            />
                             <p>{{ item.message?.text }}</p>
                         </div>
                     </div>
@@ -29,7 +35,7 @@ import { mapGetters } from "vuex"
 
 export default {
     name: "messages-box",
-    components: { DynamicScroller, DynamicScrollerItem },
+    components: { DynamicScroller, DynamicScrollerItem, Image },
     computed: {
         ...mapGetters({
             messages: 'chat/message',

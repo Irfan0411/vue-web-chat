@@ -1,4 +1,5 @@
 import axios from "axios";
+import Compressor from "compressorjs";
 const url = "http://localhost:3000/"
 
 export default {
@@ -33,9 +34,7 @@ export default {
     sendMessage({state,rootState, commit}, message) {
         const dataChat = {
             userId: rootState.user.userId,
-            message: {
-                text: message
-            },
+            message,
             to: state.openMessage.userId
         }
         if(state.openMessage.newChat) {        /* kalo user belum termasuk dalam chatList */
@@ -54,6 +53,7 @@ export default {
         } else {
             axios.post(url + "chat", dataChat)      /* mengirim pesan */
             .then(res => {
+                console.log(res.data);
                 commit("newMessage", {id: state.openMessage.userId, value: res.data})     /* menyimpan chat */
             })
             .catch(err => console.log(err))
@@ -65,5 +65,28 @@ export default {
         } else {
             commit("setMessage", {id: receiverId, value})
         }
+    },
+    sendImage({state, commit, dispatch}, caption) {
+        new Compressor(state.sendImage.img, {
+            quality: 0.6,
+            success(res) {
+                const formData = new FormData()
+                formData.append("media", res)
+                axios.post(url + "chat/image", formData)
+                .then(res => {
+                    commit("deleteSendImage")
+                    const message = {
+                        text: caption,
+                        image: res.data.filename
+                    }
+                    dispatch("sendMessage", message)
+                })
+                .catch(err => console.log(err))
+            },
+            error(err) {
+                console.log(err);
+                console.log("gagal compress");
+            }
+        })
     }
 }
