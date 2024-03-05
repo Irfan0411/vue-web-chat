@@ -4,7 +4,7 @@
       <div @click="back" class="i-back sm:hidden"></div>
       <div>
         <img
-          :src="'http://localhost:3000/files/avatar/'+openMessage.avatar"
+          :src="url+'/files/avatar/'+openMessage.avatar"
           class="rounded-full overflow-hidden min-w-12 h-12 object-cover"
           alt="avatar"
         >
@@ -27,8 +27,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { url } from '../config';
 export default {
   name: "header-messages",
+  data() {
+    return {
+      url
+    }
+  },
   computed: {
     ...mapGetters({
       openMessage: 'chat/openMessage'

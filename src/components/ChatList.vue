@@ -6,7 +6,7 @@
                 <div class="w-10/12 flex gap-2 items-center">
                     <div>
                         <img
-                            :src="'http://localhost:3000/files/avatar/'+chat?.avatar"
+                            :src="url+'/files/avatar/'+chat?.avatar"
                             class="rounded-full overflow-hidden w-14 h-14"
                             alt="avatar"
                         >
@@ -25,13 +25,15 @@
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import { url } from '../config';
 
 export default {
     name: "chat-list",
     props: {all: Boolean},
     data() {
         return {
-            list: []
+            list: [],
+            url
         }
     },
     computed: {
@@ -72,7 +74,7 @@ export default {
     },
     mounted() {
         if (this.all) {
-            axios.get("http://localhost:3000/user")
+            axios.get(url+ "/user")
             .then(res => this.list = res.data)
             .catch(err => console.log(err))
         }

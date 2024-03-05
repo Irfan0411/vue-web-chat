@@ -2,12 +2,11 @@ import axios from "axios";
 import router from "../../../router"
 import { socket } from "../../../socket";
 import Compressor from "compressorjs";
-
-const url = "http://localhost:3000/"
+import { url } from "../../../config";
 
 export default {
     login({commit, dispatch}, {email, password, newUser}) {
-        axios.post(url + "login", {email, password})
+        axios.post(url + "/login", {email, password})
         .then(res => {
             localStorage.setItem("token", res.data.token)
             const { token, ...data } = res.data
@@ -27,14 +26,14 @@ export default {
         })
     },
     register(context, payload) {
-        axios.post(url + "register", payload)
+        axios.post(url + "/register", payload)
         .then(res => {
             context.dispatch("login", {email: payload.email, password: payload.password, newUser: true})
         })
         .catch(err => console.log(err))
     },
     userData({commit, dispatch}) {
-        axios.get(url + "info")
+        axios.get(url + "/info")
         .then(res => {
             commit("userData", res.data)        /* simpan data user */
             dispatch("chat/loadChatList", null, {root: true})        /* ambil data list chat */
@@ -46,7 +45,7 @@ export default {
         })
     },
     updateUser(context, payload) {
-        axios.post(url + "user/update", payload)
+        axios.post(url + "/user/update", payload)
         .then(res => router.push("/"))
         .catch(err => console.log(err))
     },
@@ -58,7 +57,7 @@ export default {
             success(res) {
                 const formData = new FormData()
                 formData.append("avatar", res,  state.user.userId+".png")
-                axios.post(url + "user/avatar", formData)
+                axios.post(url + "/user/avatar", formData)
                 .then(res => {
                     dispatch("updateUser", {username:  state.user.username, avatar:  state.user.userId+".png"})
                 })

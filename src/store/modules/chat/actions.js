@@ -1,10 +1,10 @@
 import axios from "axios";
 import Compressor from "compressorjs";
-const url = "http://localhost:3000/"
+import { url } from "../../../config"
 
 export default {
     loadChatList({commit, dispatch, rootState}) {
-        axios.get(url + "chatlist", {params: {chatList: rootState.user.user.chatList}})
+        axios.get(url + "/chatlist", {params: {chatList: rootState.user.user.chatList}})
         .then(res => {
             commit("setChatList", res.data)     /* simpan data list chat */
             commit("openMessage", res.data[0])     /* buka chat pertama */
@@ -17,7 +17,7 @@ export default {
     loadMessage({state, commit}) {
         for (let i = 0; i < state.chatList.length; i++) {
             const receiverId = state.chatList[i].userId
-            axios.get(url + "chat/" + receiverId)
+            axios.get(url + "/chat/" + receiverId)
             .then(res => {
                 commit("setMessage", {id: receiverId, value: res.data})     /* simpan data chat dari setiap user */
             })
@@ -38,9 +38,9 @@ export default {
             to: state.openMessage.userId
         }
         if(state.openMessage.newChat) {        /* kalo user belum termasuk dalam chatList */
-            axios.post(url + "chatlist", {to: state.openMessage.userId})       /* menambahkan chatList baru */
+            axios.post(url + "/chatlist", {to: state.openMessage.userId})       /* menambahkan chatList baru */
             .then(res => {
-                axios.post(url + "chat", dataChat)      /* mengirim pesan */
+                axios.post(url + "/chat", dataChat)      /* mengirim pesan */
                 .then(res => {
                     const {newChat, ...other} = state.openMessage
                     commit("newChatList", other)        /* menyimpan chatList baru */
@@ -51,7 +51,7 @@ export default {
             })
             .catch(err => console.log(err))
         } else {
-            axios.post(url + "chat", dataChat)      /* mengirim pesan */
+            axios.post(url + "/chat", dataChat)      /* mengirim pesan */
             .then(res => {
                 console.log(res.data);
                 commit("newMessage", {id: state.openMessage.userId, value: res.data})     /* menyimpan chat */
@@ -72,7 +72,7 @@ export default {
             success(res) {
                 const formData = new FormData()
                 formData.append("media", res)
-                axios.post(url + "chat/image", formData)
+                axios.post(url + "/chat/image", formData)
                 .then(res => {
                     commit("deleteSendImage")
                     const message = {

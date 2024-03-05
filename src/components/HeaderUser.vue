@@ -3,7 +3,7 @@
     <div class="flex gap-4 items-center">
       <div>
         <img
-          :src="'http://localhost:3000/files/avatar/'+userData.avatar"
+          :src="url+'/files/avatar/'+userData.avatar"
           class="min-w-14 h-14 rounded-full overflow-hidden object-cover"
           alt="avatar"
         >
@@ -22,8 +22,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { url } from '../config';
 export default {
     name: "header-user",
+    data() {
+      return {
+        url
+      }
+    },
     computed: {
       ...mapGetters({
         userData: 'user/userData',

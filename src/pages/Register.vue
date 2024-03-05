@@ -8,7 +8,7 @@
             />
         </div>
         <div class="w-[50%] lg:w-[40%] h-full bg-white rounded-xl py-14 px-20 hidden md:flex flex-col justify-between items-center">
-            <img src="/icon/chat-icon.png" alt="icon" class="w-fit h-fit">
+            <div class="i-icon"></div>
             <div class="w-full">
                 <p class="text-center text-4xl font-bold mb-2">Hello there!</p>
                 <p class="text-center mb-10">please enter your details</p>

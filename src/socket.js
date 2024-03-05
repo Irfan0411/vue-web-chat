@@ -1,5 +1,6 @@
 import { reactive } from "vue"
 import { io } from "socket.io-client"
+import { url } from "./config"
 
 export const state = reactive({
     connected: false,
@@ -7,7 +8,7 @@ export const state = reactive({
     chatList: {}
 })
 
-export const socket = io("http://localhost:3000")
+export const socket = io(url)
 
 socket.on("connect", () => {
     state.connected = true

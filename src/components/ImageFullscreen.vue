@@ -2,7 +2,7 @@
     <div class="absolute w-screen h-screen top-0 left-0 backdrop-blur-sm">
         <div class="w-full h-full bg-black opacity-65"></div>
         <div class="absolute w-full h-full top-0 left-0 flex justify-center items-center overflow-auto">
-            <img class="w-[90%] h-[90%] object-contain transition-all" :style="`scale: ${zoom}; rotate: ${rotate}deg`" :src="`http://localhost:3000/files/media/${src}`" alt="media">
+            <img class="w-[90%] h-[90%] object-contain transition-all" :style="`scale: ${zoom}; rotate: ${rotate}deg`" :src="`${url}/files/media/${src}`" alt="media">
         </div>
         <div class="flex gap-5 items-center absolute top-5 right-5 z-30">
             <div @click="rotateleft" class="i-rotate-left"></div>
@@ -15,12 +15,14 @@
 </template>
 
 <script>
+import { url } from '../config'
 export default {
     name: "image-fullscreen",
     data() {
         return{
             zoom: 1,
-            rotate: 0
+            rotate: 0,
+            url
         }
     },
     props: {

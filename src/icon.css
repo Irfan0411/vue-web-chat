@@ -4,7 +4,12 @@
     font-family: 'Roboto', sans-serif;
 }
 
-
+.i-icon{
+    min-width: 40px;
+    height: 40px;
+    background-image: url('/icon.svg');
+    background-size: contain;
+}
 .i-add{
     min-width: 20px;
     height: 20px;
@@ -51,6 +56,12 @@
     min-width: 20px;
     height: 20px;
     background-image: url('/left.svg');
+    background-size: contain;
+}
+.i-right{
+    min-width: 20px;
+    height: 20px;
+    background-image: url('/right.svg');
     background-size: contain;
 }
 .i-back{
