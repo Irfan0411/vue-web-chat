@@ -67,6 +67,7 @@ export default {
                 this.$store.commit("chat/openMessage", payload)
             }
             this.$store.commit("chat/isOpen", true)
+            this.$store.commit("chat/findSomeone", false)
         },
         userCheck(userId) {
             return this.chatList?.findIndex(user => {return user?.userId === userId}) !== -1 ? 'hidden' : ''

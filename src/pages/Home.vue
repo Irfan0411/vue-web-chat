@@ -18,7 +18,7 @@
                 <Input />
             </div>
         </div>
-        <div class="w-full sm:w-1/2 h-full bg-white absolute transition-all ease-in-out duration-300 top-0" :class="findSomeone ? 'left-0' : '-left-full'">
+        <div class="w-full sm:w-1/2 md:w-2/5 h-full bg-white absolute transition-all ease-in-out duration-300 top-0" :class="findSomeone ? 'left-0' : '-left-full'">
             <div class="flex gap-2 items-center w-full h-14 px-4">
                 <div @click="find" class="i-left"></div>
                 <span class="font-bold">Cari Seseorang</span>
