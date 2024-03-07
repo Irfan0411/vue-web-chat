@@ -1,0 +1,114 @@
+/* font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+.i-icon{
+    min-width: 40px;
+    height: 40px;
+    background-image: url('/icon.svg');
+    background-size: contain;
+}
+.i-add{
+    min-width: 20px;
+    height: 20px;
+    background-image: url('/add.svg');
+    background-size: contain;
+}
+.i-telephone{
+    min-width: 15px;
+    height: 15px;
+    background-image: url('/telephone.svg');
+    background-size: contain;
+}
+.i-videocall{
+    min-width: 15px;
+    height: 15px;
+    background-image: url('/videocall.svg');
+    background-size: contain;
+}
+.i-bullets{
+    min-width: 15px;
+    height: 15px;
+    background-image: url('/bullets.svg');
+    background-size: contain;
+}
+.i-paperclip{
+    min-width: 20px;
+    height: 20px;
+    background-image: url('/paperclip.svg');
+    background-size: contain;
+}
+.i-emote{
+    min-width: 20px;
+    height: 20px;
+    background-image: url('/emote.svg');
+    background-size: contain;
+}
+.i-send{
+    min-width: 15px;
+    height: 15px;
+    background-image: url('/send.svg');
+    background-size: contain;
+}
+.i-left{
+    min-width: 20px;
+    height: 20px;
+    background-image: url('/left.svg');
+    background-size: contain;
+}
+.i-right{
+    min-width: 20px;
+    height: 20px;
+    background-image: url('/right.svg');
+    background-size: contain;
+}
+.i-back{
+    min-width: 30px;
+    height: 30px;
+    background-image: url('/left.svg');
+    background-size: contain;
+}
+.i-logout{
+    min-width: 20px;
+    height: 20px;
+    background-image: url('/logout.svg');
+    background-size: contain;
+}
+.i-view{
+    min-width: 40px;
+    height: 40px;
+    background-image: url('/view.svg');
+    background-size: contain;
+}
+.i-x{
+    min-width: 35px;
+    height: 35px;
+    background-image: url('/x.svg');
+    background-size: contain;
+}
+.i-zoomin{
+    min-width: 35px;
+    height: 35px;
+    background-image: url('/zoom-in.svg');
+    background-size: contain;
+}
+.i-zoomout{
+    min-width: 35px;
+    height: 35px;
+    background-image: url('/zoom-out.svg');
+    background-size: contain;
+}
+.i-rotate-right{
+    min-width: 30px;
+    height: 30px;
+    background-image: url('/rotate-right.svg');
+    background-size: contain;
+}
+.i-rotate-left{
+    min-width: 30px;
+    height: 30px;
+    background-image: url('/rotate-left.svg');
+    background-size: contain;
+}
