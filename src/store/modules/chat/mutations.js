@@ -1,5 +1,4 @@
 import Compressor from "compressorjs";
-import {toRefs} from "vue"
 
 export default {
     setChatList(state, payload) {
@@ -28,7 +27,6 @@ export default {
         console.log("is open");
         new Compressor(payload, {
             quality: 0.6,
-            mimeType: "image/jpg",
             success(res) {
                 state.sendImage = {
                     img: res,
@@ -50,5 +48,8 @@ export default {
     },
     deleteViewImage(state) {
         state.viewImage = ""
+    },
+    uploadImage(state, payload) {
+        state.uploadImage = payload
     }
 }

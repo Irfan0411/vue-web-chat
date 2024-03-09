@@ -14,5 +14,6 @@ export default {
         preview: "",
         isOpen: false
     },
-    viewImage: ""
+    viewImage: "",
+    uploadImage: false
 }

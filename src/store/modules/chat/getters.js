@@ -22,5 +22,8 @@ export default {
     },
     viewImage(state) {
         return state.viewImage
+    },
+    uploadImage(state) {
+        return state.uploadImage
     }
 }

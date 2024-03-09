@@ -67,26 +67,22 @@ export default {
         }
     },
     sendImage({state, commit, dispatch}, caption) {
-        new Compressor(state.sendImage.img, {
-            quality: 0.6,
-            success(res) {
-                const formData = new FormData()
-                formData.append("media", res)
-                axios.post(url + "/chat/image", formData)
-                .then(res => {
-                    commit("deleteSendImage")
-                    const message = {
-                        text: caption,
-                        image: res.data.filename
-                    }
-                    dispatch("sendMessage", message)
-                })
-                .catch(err => console.log(err))
-            },
-            error(err) {
-                console.log(err);
-                console.log("gagal compress");
+        commit("uploadImage", true)
+        const formData = new FormData()
+        formData.append("media", state.sendImage.img)
+        axios.post(url + "/chat/image", formData)
+        .then(res => {
+            commit("deleteSendImage")
+            const message = {
+                text: caption,
+                image: res.data.filename
             }
+            dispatch("sendMessage", message)
+            commit("uploadImage", false)
+        })
+        .catch(err => {
+            console.log(err)
+            commit("uploadImage", false)
         })
     }
 }
